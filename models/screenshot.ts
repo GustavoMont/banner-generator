@@ -1,9 +1,13 @@
 import puppeteer, { Page } from "puppeteer-core";
-import chrome from "chrome-aws-lambda";
+import chromium from "@sparticuz/chromium";
 
 export async function getOptions() {
   const isDev = !process.env.AWS_REGION;
   let options;
+  chromium.setHeadlessMode = true;
+
+  // Optional: If you'd like to disable webgl, true is the default.
+  chromium.setGraphicsMode = false;
 
   type ChromeExecPathsSys = "win32" | "linux" | "darwin";
   const chromeExecPaths: Record<ChromeExecPathsSys, string> = {
@@ -25,9 +29,10 @@ export async function getOptions() {
     };
   } else {
     options = {
-      args: chrome.args,
-      executablePath: await chrome.executablePath,
-      headless: chrome.headless,
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
     };
   }
 
