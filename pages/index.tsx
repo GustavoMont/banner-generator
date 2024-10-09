@@ -35,7 +35,7 @@ export default function Home() {
       <h1 className="text-4xl text-blue-600">Gerar banner da Rifa</h1>
       <select
         onChange={(e) => setCard(e.target.value as TicketRange)}
-        className="px-4 py-3 rounded-full text-black w-2/5"
+        className="px-4 py-3 rounded-full text-black w-full max-w-[500px]"
         value={card ?? ""}
       >
         <option value="" disabled>
