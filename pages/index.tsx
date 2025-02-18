@@ -3,7 +3,7 @@ import { TicketRange } from "@/util/html-generator";
 import { useState } from "react";
 
 export default function Home() {
-  const TICKETS_COUNT = 450;
+  const TICKETS_COUNT = 400;
   const TICKETS_PER_CARD = 10;
   const [card, setCard] = useState<TicketRange>();
   const cardOptions = Array.from(
