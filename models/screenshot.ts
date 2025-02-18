@@ -1,4 +1,4 @@
-import puppeteer, { Page } from "puppeteer-core";
+import puppeteer, { Page, Viewport } from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 
 export async function getOptions() {
@@ -53,10 +53,18 @@ async function getPage(): Promise<Page> {
   return _page;
 }
 
-export async function getScreenshot(html: string) {
+const defaultOptions: Viewport = {
+  width: 1080,
+  height: 1920,
+};
+
+export async function getScreenshot(
+  html: string,
+  { width, height, ...options }: Viewport = defaultOptions
+) {
   const page = await getPage();
 
-  await page.setViewport({ width: 1080, height: 1920 });
+  await page.setViewport({ width, height, ...options });
   await page.setContent(html);
 
   const file = await page.screenshot({ type: "png" });

@@ -19,7 +19,7 @@ export default async function banner(
 
   const html = getHTML({ numbers: ticketRange as TicketRange });
 
-  const file = await getScreenshot(html);
+  const file = await getScreenshot(html, { height: 1080, width: 1080 });
 
   res.setHeader("Content-Type", "image/png");
   res.setHeader(

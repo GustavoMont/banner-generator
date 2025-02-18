@@ -9,6 +9,8 @@ export const getHTML = ({ numbers }: GetHtmlParams) => `
     <head>
       <meta charset="UTF-8">
       <style>
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+
         body {
           margin: 0;
           width: 100%;
@@ -21,10 +23,10 @@ export const getHTML = ({ numbers }: GetHtmlParams) => `
           background: url(${process.env.APP_URL}/images/banner_base.png);
         }
         .numbers {
-            background: #fff;
-            margin-top: 72px;
+            background: #004AAD;
+            margin-top: 80px;
             width: 70%;
-            height: 242px;
+            height: 260px;
             padding: 0 40px;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -35,14 +37,15 @@ export const getHTML = ({ numbers }: GetHtmlParams) => `
         .number {
           width: 110px;
           height: 110px;
-          background: #5271FF;
+          background: #f6f4ef;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 2rem;
-          font-family: sans-serif;
-          color: #fafafa;
+          font-size: 4rem;
+          font-family: "Montserrat", serif;
+          font-weight: 500;
+          color: #38b6ff;
         }
       </style>
     </head>
