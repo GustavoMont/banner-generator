@@ -2,49 +2,44 @@ import puppeteer, { LaunchOptions, Page, Viewport } from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 
 export async function getOptions() {
-  const isDev = !process.env.AWS_REGION;
+  const isDev =
+    process.env.NODE_ENV === "development" ||
+    !process.env.AWS_REGION ||
+    process.env.IS_LOCAL === "true";
+
   let options: LaunchOptions;
 
-  type ChromeExecPathsSys = "win32" | "linux" | "darwin";
-  const chromeExecPaths: Record<ChromeExecPathsSys, string> = {
-    win32: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-    linux: "/usr/bin/google-chrome",
-    darwin: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-  };
-
-  const platform = process.platform as ChromeExecPathsSys;
-
-  const isExecPath = platform in chromeExecPaths;
-  const exePath = chromeExecPaths[isExecPath ? platform : "win32"];
-
   if (isDev) {
+    type ChromeExecPathsSys = "win32" | "linux" | "darwin";
+    const chromeExecPaths: Record<ChromeExecPathsSys, string> = {
+      win32: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      linux: "/usr/bin/google-chrome",
+      darwin: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    };
+
+    const platform = process.platform as ChromeExecPathsSys;
+    const exePath = chromeExecPaths[platform] || chromeExecPaths["linux"];
+
     options = {
-      args: puppeteer.defaultArgs({
-        args: chromium.args,
-        headless: false,
-      }),
+      args: [],
       executablePath: exePath,
       headless: true,
     };
   } else {
-    const viewport = {
-      deviceScaleFactor: 1,
-      hasTouch: false,
-      height: 1080,
-      isLandscape: true,
-      isMobile: false,
-      width: 1920,
-    };
-
+    // For serverless/staging
+    chromium.setGraphicsMode = false;
     options = {
-      args: puppeteer.defaultArgs({
-        args: chromium.args,
-        headless: "shell",
-      }),
-
+      args: chromium.args,
       executablePath: await chromium.executablePath(),
       headless: "shell",
-      defaultViewport: viewport,
+      defaultViewport: {
+        deviceScaleFactor: 1,
+        hasTouch: false,
+        height: 1080,
+        isLandscape: true,
+        isMobile: false,
+        width: 1920,
+      },
     };
   }
 
@@ -67,7 +62,7 @@ async function getPage(): Promise<Page> {
 
 const defaultOptions: Viewport = {
   width: 1080,
-  height: 1920,
+  height: 1080,
 };
 
 export async function getScreenshot(
@@ -83,3 +78,4 @@ export async function getScreenshot(
 
   return file;
 }
+
