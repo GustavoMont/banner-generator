@@ -1,13 +1,9 @@
-import puppeteer, { Page, Viewport } from "puppeteer-core";
+import puppeteer, { LaunchOptions, Page, Viewport } from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 
 export async function getOptions() {
   const isDev = !process.env.AWS_REGION;
-  let options;
-  chromium.setHeadlessMode = true;
-
-  // Optional: If you'd like to disable webgl, true is the default.
-  chromium.setGraphicsMode = false;
+  let options: LaunchOptions;
 
   type ChromeExecPathsSys = "win32" | "linux" | "darwin";
   const chromeExecPaths: Record<ChromeExecPathsSys, string> = {
@@ -23,16 +19,32 @@ export async function getOptions() {
 
   if (isDev) {
     options = {
-      args: [],
+      args: puppeteer.defaultArgs({
+        args: chromium.args,
+        headless: false,
+      }),
       executablePath: exePath,
       headless: true,
     };
   } else {
+    const viewport = {
+      deviceScaleFactor: 1,
+      hasTouch: false,
+      height: 1080,
+      isLandscape: true,
+      isMobile: false,
+      width: 1920,
+    };
+
     options = {
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
+      args: puppeteer.defaultArgs({
+        args: chromium.args,
+        headless: "shell",
+      }),
+
       executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
+      headless: "shell",
+      defaultViewport: viewport,
     };
   }
 
@@ -60,7 +72,7 @@ const defaultOptions: Viewport = {
 
 export async function getScreenshot(
   html: string,
-  { width, height, ...options }: Viewport = defaultOptions
+  { width, height, ...options }: Viewport = defaultOptions,
 ) {
   const page = await getPage();
 
