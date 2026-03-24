@@ -18,7 +18,7 @@
     "react-dom": "^19"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/forms": "^0.5.11",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
