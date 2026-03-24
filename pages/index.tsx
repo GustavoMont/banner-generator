@@ -4,16 +4,17 @@ import { useState } from "react";
 import download from "downloadjs";
 
 export default function Home() {
-  const TICKETS_COUNT = 400;
-  const TICKETS_PER_CARD = 10;
+  const TICKETS_COUNT = Number(process.env.NEXT_PUBLIC_TICKETS_COUNT || 400);
+  const TICKETS_PER_CARD = Number(process.env.NEXT_PUBLIC_TICKETS_PER_CARD || 10);
   const [card, setCard] = useState<TicketRange>();
   const cardOptions = Array.from(
     { length: TICKETS_COUNT / TICKETS_PER_CARD },
     (_, i) => {
-      const starts = i * 10 + 1;
+      const starts = i * TICKETS_PER_CARD + 1;
+      const ends = starts + TICKETS_PER_CARD - 1;
       return {
-        value: `${starts}-${starts + 9}` as TicketRange,
-        option: `${starts}-${starts + 9}`,
+        value: `${starts}-${ends}` as TicketRange,
+        option: `${starts}-${ends}`,
       };
     },
   );
