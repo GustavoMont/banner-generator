@@ -25,12 +25,6 @@ This file logs dependencies that were not updated because they contain breaking 
 - **Affected File:** `models/screenshot.ts`
 - **Reason:** Significant major version jump that requires verification of all browser-related logic.
 
-## tailwindcss (3.4.13 -> 4.2.2)
-
-- **Breaking Change:** Tailwind CSS v4 is a major rewrite. It moves to a CSS-first configuration, removes `tailwind.config.js` by default, and changes how directives like `@tailwind` and `@layer` are used.
-- **Affected Files:** `tailwind.config.ts`, `styles/globals.css`
-- **Reason:** Upgrading would require a complete migration of the styling configuration and CSS files.
-
 ## typescript (5.6.2 -> 6.0.2)
 
 - **Breaking Change:** TypeScript 6.0 introduces major changes in defaults: `strict` is now `true` by default, `types` is empty by default, and legacy targets/resolutions are deprecated.
