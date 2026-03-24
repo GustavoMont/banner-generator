@@ -9,7 +9,7 @@ export const getHTML = ({ numbers }: GetHtmlParams) => `
     <head>
       <meta charset="UTF-8">
       <style>
-      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Poppins:wght@600&display=swap');
 
         body {
           margin: 0;
@@ -18,12 +18,12 @@ export const getHTML = ({ numbers }: GetHtmlParams) => `
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: sans-serif;
+          font-family: 'Poppins', sans-serif;
   
           background: url(${process.env.APP_URL}/images/banner_base.png);
         }
         .numbers {
-            background: #004AAD;
+            background: #00bf63;
             margin-top: 80px;
             width: 70%;
             height: 260px;
@@ -42,10 +42,10 @@ export const getHTML = ({ numbers }: GetHtmlParams) => `
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 4rem;
-          font-family: "Montserrat", serif;
-          font-weight: 500;
-          color: #38b6ff;
+          font-size: 3.1rem;
+          font-family: "Poppins", sans-serif;
+          font-weight: 600;
+          color: #00bf63;
         }
       </style>
     </head>
@@ -66,7 +66,7 @@ const generateNumberDivs = (range: TicketRange): string => {
 
   const html = cardNumbers.reduce(
     (acc, current) => acc.concat(`<div class="number">${current}</div>`),
-    ""
+    "",
   );
   return html;
 };
